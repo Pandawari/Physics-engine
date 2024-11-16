@@ -1,7 +1,5 @@
 import pygame
-from .vector import *
-from .simulation import Simulation
-from .rigid_body import *
+import physics
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -10,23 +8,23 @@ fps = 240
 dt = 1/ fps
 
 # initialize simulation and add objects
-my_simulation = Simulation()
+my_simulation = physics.Simulation()
 
-rb1 = Rigid_body(mass=50,position=Vector(700,70),velocity =Vector(0,0),radius=30,is_fixed=False)
-rb2 = Rigid_body(mass=50,position=Vector(170,400),velocity =Vector(0,0),radius=30,is_fixed=False)
-rb3 = Rigid_body(mass=50,position=Vector(200,220),velocity =Vector(50,0),radius=30,is_fixed=False)
-rb4 = Rigid_body(mass=50,position=Vector(250,430),velocity =Vector(-20,0),radius=30,is_fixed=False)
-rb5 = Rigid_body(mass=50,position=Vector(300,290),velocity =Vector(-80,0),radius=30,is_fixed=True)
-rb6 = Rigid_body(mass=50,position=Vector(150,120),velocity =Vector(0,0),radius=30,is_fixed=True)
+rb1 = physics.Rigid_body(mass=50,position=physics.Vector(700,70),velocity =physics.Vector(0,0),radius=30,is_fixed=False)
+rb2 = physics.Rigid_body(mass=50,position=physics.Vector(170,400),velocity =physics.Vector(0,0),radius=30,is_fixed=False)
+rb3 = physics.Rigid_body(mass=50,position=physics.Vector(200,220),velocity =physics.Vector(50,0),radius=30,is_fixed=False)
+rb4 = physics.Rigid_body(mass=50,position=physics.Vector(250,430),velocity =physics.Vector(-20,0),radius=30,is_fixed=False)
+rb5 = physics.Rigid_body(mass=50,position=physics.Vector(300,290),velocity =physics.Vector(-80,0),radius=30,is_fixed=True)
+rb6 = physics.Rigid_body(mass=50,position=physics.Vector(150,120),velocity =physics.Vector(0,0),radius=30,is_fixed=True)
 
 
-l1 = Line(start_point=Vector(0,500),end_point=Vector(1280,500),oriantation=-1)
-l2 = Line(start_point=Vector(0,0),end_point=Vector(1280,0),oriantation=1)
-l3= Line(start_point=Vector(0,0),end_point=Vector(0,720),oriantation=1)
-l4= Line(start_point=Vector(1280,0),end_point=Vector(1280,720),oriantation=-1)
-l5= Line(start_point=Vector(0,1280),end_point=Vector(1280,720),oriantation=1)
+l1 = physics.Line(start_point=physics.Vector(0,500),end_point=physics.Vector(1280,500),oriantation=-1)
+l2 = physics.Line(start_point=physics.Vector(0,0),end_point=physics.Vector(1280,0),oriantation=1)
+l3= physics.Line(start_point=physics.Vector(0,0),end_point=physics.Vector(0,720),oriantation=1)
+l4= physics.Line(start_point=physics.Vector(1280,0),end_point=physics.Vector(1280,720),oriantation=-1)
+l5= physics.Line(start_point=physics.Vector(0,1280),end_point=physics.Vector(1280,720),oriantation=1)
 
-c1 = Circle(500,Vector(600,200),2)
+c1 = physics.Circle(500,physics.Vector(600,200),2)
 
 my_simulation.add_a_line(l1)
 my_simulation.add_a_line(l2)
@@ -46,7 +44,7 @@ run  = True
 
 while run:
     x,y = pygame.mouse.get_pos()
-    mouse = Vector(x,y)
+    mouse = physics.Vector(x,y)
     
     for event in pygame.event.get():
 
@@ -56,14 +54,14 @@ while run:
         if event.type == pygame.MOUSEBUTTONDOWN:
             for rb in my_simulation.rigid_bodies:
 
-                if is_point_inside(x,y,rb):
+                if physics.is_point_inside(x,y,rb):
                     rb.is_touched = True
-                    rb.velocity = Vector(0,0)
+                    rb.velocity = physics.Vector(0,0)
 
         if event.type == pygame.KEYDOWN:
 
             if event.key == pygame.K_SPACE:
-                my_simulation.add_a_rigid_body(Rigid_body(mass=50,position=mouse,velocity =Vector(0,0),radius=30,is_fixed=False))
+                my_simulation.add_a_rigid_body(physics.Rigid_body(mass=50,position=mouse,velocity = physics.Vector(0,0),radius=30,is_fixed=False))
 
         if event.type == pygame.MOUSEBUTTONUP:
 

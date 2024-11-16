@@ -1,5 +1,7 @@
-from .rigid_body import *
-from .vector import *
+from .rigid_body import Rigid_body
+from .line import Line
+from .circle import Circle
+from .vector import Vector
 
 class Simulation:
     
