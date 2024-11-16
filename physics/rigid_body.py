@@ -1,5 +1,5 @@
-from vector import Vector
-import numpy as np
+from .vector import Vector
+
 class Rigid_body:
     def __init__(self,mass,position,velocity,radius,mouse_force= Vector(0,0),is_fixed=False,is_touched=False):
         self.mass = mass

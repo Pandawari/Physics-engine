@@ -1,5 +1,5 @@
-from rigid_body import *
-from vector import *
+from .rigid_body import *
+from .vector import *
 
 class Simulation:
     
