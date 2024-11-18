@@ -10,9 +10,9 @@ def is_point_inside(x, y, circle):
 
     r = circle.radius
     circle_center_x = circle.position.x
-    cirlce_center_y = circle.position.y
+    circle_center_y = circle.position.y
 
-    if r**2 >= (x - circle_center_x)**2 + (y - cirlce_center_y)**2:
+    if r**2 >= (x - circle_center_x)**2 + (y - circle_center_y)**2:
         return True
     else:
         return False

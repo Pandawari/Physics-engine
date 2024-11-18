@@ -1,6 +1,7 @@
 import pygame
 import physics
 
+
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
@@ -11,17 +12,25 @@ dt = 1 / fps
 my_simulation = physics.Simulation()
 
 rb1 = physics.Rigid_body(mass=50, position=physics.Vector(
-    700, 70), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
+    700, 160), velocity=physics.Vector(-900, 0), radius=30, is_fixed=True)
 rb2 = physics.Rigid_body(mass=50, position=physics.Vector(
-    170, 400), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
+    450, 450), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
 rb3 = physics.Rigid_body(mass=50, position=physics.Vector(
-    200, 220), velocity=physics.Vector(50, 0), radius=30, is_fixed=False)
+    400, 400), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
 rb4 = physics.Rigid_body(mass=50, position=physics.Vector(
-    250, 430), velocity=physics.Vector(-20, 0), radius=30, is_fixed=False)
+    350, 350), velocity=physics.Vector(0,0), radius=30, is_fixed=False)
 rb5 = physics.Rigid_body(mass=50, position=physics.Vector(
-    300, 290), velocity=physics.Vector(-80, 0), radius=30, is_fixed=True)
+    300, 300), velocity=physics.Vector(0,0), radius=30, is_fixed=False)
 rb6 = physics.Rigid_body(mass=50, position=physics.Vector(
-    150, 120), velocity=physics.Vector(0, 0), radius=30, is_fixed=True)
+    250, 250), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
+rb7 = physics.Rigid_body(mass=50, position=physics.Vector(
+    650, 250), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
+rb8 = physics.Rigid_body(mass=50, position=physics.Vector(
+    950, 560), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
+rb9 = physics.Rigid_body(mass=50, position=physics.Vector(
+    960, 660), velocity=physics.Vector(0, 0), radius=30, is_fixed=False)
+rb10 = physics.Rigid_body(mass=50, position=physics.Vector(
+    250, 160), velocity=physics.Vector(0, 0), radius=30, is_fixed=True)
 
 
 l1 = physics.Line(start_point=physics.Vector(0, 500),
@@ -37,7 +46,6 @@ l5 = physics.Line(start_point=physics.Vector(0, 1280),
 
 c1 = physics.Circle(500, physics.Vector(600, 200), 2)
 
-my_simulation.add_a_line(l1)
 my_simulation.add_a_line(l2)
 my_simulation.add_a_line(l3)
 my_simulation.add_a_line(l4)
@@ -45,8 +53,25 @@ my_simulation.add_a_line(l5)
 
 
 my_simulation.add_a_rigid_body(rb1)
-
-
+my_simulation.add_a_rigid_body(rb2)
+my_simulation.add_a_rigid_body(rb3)
+my_simulation.add_a_rigid_body(rb4)
+my_simulation.add_a_rigid_body(rb5)
+my_simulation.add_a_rigid_body(rb6)
+my_simulation.add_a_rigid_body(rb7)
+my_simulation.add_a_rigid_body(rb8)
+my_simulation.add_a_rigid_body(rb9)
+my_simulation.add_a_rigid_body(rb10)
+"""for i in my_simulation.rigid_bodies:
+    for j in my_simulation.rigid_bodies:
+        if i ==j:
+            continue
+        elif j not in i.connections:
+            i.add_connection(j)"""
+for i in range(len(my_simulation.rigid_bodies)):
+    if i != len(my_simulation.rigid_bodies) - 1:
+        my_simulation.rigid_bodies[i].add_connection(my_simulation.rigid_bodies[i+1])
+        
 
 colors = ["red", "blue", "green", "yellow", "pink", "orange"]
 run = True
@@ -92,6 +117,11 @@ while run:
 
     # drawing
     for rb in my_simulation.rigid_bodies:
+        if not len(rb.connections) == 0:
+            for connection in rb.connections:
+                
+                pygame.draw.line(screen, "red", start_pos=rb.position.tuple(),
+                        end_pos=connection.position.tuple())
         pygame.draw.circle(screen, "white", rb.position.tuple(), rb.radius)
     for c in my_simulation.circles:
         pygame.draw.circle(screen, "white", c.tuple(),
@@ -100,12 +130,12 @@ while run:
     for line in my_simulation.lines:
         pygame.draw.line(screen, "red", start_pos=line.start_point.tuple(
         ), end_pos=line.end_point.tuple())
-
-    pygame.draw.line(screen, "red", start_pos=rb1.position.tuple(),
-                     end_pos=rb2.position.tuple())
+    
+    
 
     pygame.display.flip()
     clock.tick(fps)
+    
 
 pygame.quit()
 

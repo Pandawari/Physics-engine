@@ -2,7 +2,7 @@ from .vector import Vector
 
 
 class Rigid_body:
-    def __init__(self, mass, position, velocity, radius, mouse_force=Vector(0, 0), is_fixed=False, is_touched=False):
+    def __init__(self, mass, position, velocity, radius, is_fixed=False, is_touched=False):
         self.mass = mass
         self.radius = radius
         self.position = position  # Vector
@@ -22,6 +22,9 @@ class Rigid_body:
 
     def add_connection(self, other):
         self.connections.append(other)
+    
+    
+            
 
     def new_integration(self, dt):
         if self.is_touched:
@@ -37,13 +40,16 @@ class Rigid_body:
     def find_kinetic_energy(self):
         velocity_squared = self.velocity.dot_product(self.velocity)
         return self.mass*velocity_squared*(0.5)
+    
     def find_potential_energy(self):
         g = 400
         return -self.position.y*self.mass*g
+    
     def update_energies(self):
         self.kinetic_energy = self.find_kinetic_energy()
         self.potential_energy = self.find_potential_energy()
         self.total_energy = self.kinetic_energy + self.potential_energy
+        
     def update(self, dt):
 
         self.new_integration(dt)
