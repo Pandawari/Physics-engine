@@ -25,15 +25,15 @@ rb6 = physics.Rigid_body(mass=50, position=physics.Vector(
 
 
 l1 = physics.Line(start_point=physics.Vector(0, 500),
-                  end_point=physics.Vector(1280, 500), oriantation=-1)
+                  end_point=physics.Vector(1280, 500), orientation=-1)
 l2 = physics.Line(start_point=physics.Vector(
-    0, 0), end_point=physics.Vector(1280, 0), oriantation=1)
+    0, 0), end_point=physics.Vector(1280, 0), orientation=1)
 l3 = physics.Line(start_point=physics.Vector(
-    0, 0), end_point=physics.Vector(0, 720), oriantation=1)
+    0, 0), end_point=physics.Vector(0, 720), orientation=1)
 l4 = physics.Line(start_point=physics.Vector(1280, 0),
-                  end_point=physics.Vector(1280, 720), oriantation=-1)
+                  end_point=physics.Vector(1280, 720), orientation=-1)
 l5 = physics.Line(start_point=physics.Vector(0, 1280),
-                  end_point=physics.Vector(1280, 720), oriantation=1)
+                  end_point=physics.Vector(1280, 720), orientation=1)
 
 c1 = physics.Circle(500, physics.Vector(600, 200), 2)
 
@@ -45,8 +45,7 @@ my_simulation.add_a_line(l5)
 
 
 my_simulation.add_a_rigid_body(rb1)
-my_simulation.add_a_rigid_body(rb2)
-rb1.add_connection(rb2)
+
 
 
 colors = ["red", "blue", "green", "yellow", "pink", "orange"]
@@ -109,3 +108,4 @@ while run:
     clock.tick(fps)
 
 pygame.quit()
+

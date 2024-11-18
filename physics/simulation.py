@@ -46,14 +46,13 @@ class Simulation:
 
     def collision_detection_to_line(self, rb, dt):
         for line in self.lines:
-            penetration = rb.radius - \
-                line.distance_between_point_to_line(rb.position)
+            penetration = rb.radius - line.distance_between_point_to_line(rb.position)
             if line.distance_between_point_to_line(rb.position) <= rb.radius:
 
                 self.collision_line_acting_normal_force(
-                    rb, line, dt, penetration)
+                    rb, line, dt)
 
-    def collision_line_acting_normal_force(self, rb, line, dt, penetration):
+    def collision_line_acting_normal_force(self, rb, line, dt):
         line_normal = line.calculate_normal_vector()
         moving_towards = rb.velocity.dot_product(line_normal)
 
@@ -62,12 +61,10 @@ class Simulation:
         if moving_towards < 0:
 
             e = 0.5
-            impulse = line_normal * \
-                (-e-1)*(rb.velocity.dot_product(line_normal))*rb.mass
+            impulse = line_normal * (-e-1)*(rb.velocity.dot_product(line_normal))*rb.mass
             impulse_force = impulse/dt
 
-            force_normal = line_normal * \
-                rb.net_force.dot_product(line_normal)*(-1)
+            force_normal = line_normal * rb.net_force.dot_product(line_normal)*(-1)
             N_total = impulse_force + force_normal
             rb.apply_force(N_total)
 
@@ -117,8 +114,8 @@ class Simulation:
     def collision_solve_rb_to_circle(self, rb, circle):
         distance_to_center = rb.position - circle.position
         normal = distance_to_center.normalize_vector()
-        rb_velocity_procted = rb.velocity.dot_product(normal)
-        rb.velocity -= normal*rb_velocity_procted*2
+        rb_velocity_projected = rb.velocity.dot_product(normal)
+        rb.velocity -= normal*rb_velocity_projected*2
 
     def update(self, dt):
 
@@ -129,6 +126,8 @@ class Simulation:
             self.collision_detection_to_line(rb, dt)
             self.collision_rb_to_circle(rb)
             self.spring_force_between_connected_rb(rb)
-
+        
             rb.update(dt)
+        
+            print(rb.total_energy)
             rb.reset_net_force()

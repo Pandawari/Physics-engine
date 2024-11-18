@@ -2,11 +2,11 @@ from .vector import Vector
 
 
 class Line:
-    def __init__(self, start_point, end_point, oriantation=1):
+    def __init__(self, start_point, end_point, orientation=1):
         self.start_point = start_point
         self.end_point = end_point
         self.slope = self.calculate_slope()
-        self.oriantation = oriantation
+        self.orientation = orientation # to choose between two possible normal vectors 
         self.normal_vector = self.calculate_normal_vector()
         self.a = self.find_y_axis_intersection()
 
@@ -18,9 +18,9 @@ class Line:
     def calculate_normal_vector(self):
         if self.slope == float('inf'):
             # Keep in mind there is 2 possible normal vectors 1,0 and -1,0
-            return Vector(self.oriantation, 0)
+            return Vector(self.orientation, 0)
 
-        return Vector(-self.slope, 1).normalize_vector()*self.oriantation
+        return Vector(-self.slope, 1).normalize_vector()*self.orientation
 
     def distance_between_point_to_line(self, point):
         numerator = abs((self.end_point.y - self.start_point.y)*point.x - (self.end_point.x - self. start_point.x)
@@ -34,6 +34,6 @@ class Line:
 
     def calculate_length(self):
 
-        sqrd_len = abs(((self.end_point.y - self.start_point.y)
+        square_len = abs(((self.end_point.y - self.start_point.y)
                        ** 2 + (self.end_point.x - self.start_point.x)**2))
-        return sqrd_len**(0.5)
+        return square_len**(0.5)
