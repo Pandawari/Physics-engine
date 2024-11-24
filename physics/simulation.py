@@ -32,7 +32,7 @@ class Simulation:
         if not rb.is_fixed:
             rb.apply_force(gravity * rb.mass)
 
-    def spring_force_between_connected_rb(self, rb, k=5000, L=10, damp=200):
+    def spring_force_between_connected_rb(self, rb, k=500, L=200, damp=20):
 
         for connection in rb.connections:
 
@@ -89,10 +89,10 @@ class Simulation:
             if distance_size <= rb.radius + other_rb.radius + 0.001:
 
                 self.collision_rb_force(rb,other_rb,dt)
-
                 correction = distance_vector.normalize_vector()*overlap/2
                 rb.position += correction
                 other_rb.position -= correction
+
                 
 
     
@@ -138,9 +138,9 @@ class Simulation:
 
             self.apply_gravity(rb)
             self.collision_detection_between_rb(rb,dt)
-            self.collision_detection_to_line(rb, dt)
             self.collision_rb_to_circle(rb)
             self.spring_force_between_connected_rb(rb)
+            self.collision_detection_to_line(rb, dt)
         
             rb.update(dt)
         

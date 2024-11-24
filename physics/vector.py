@@ -4,7 +4,7 @@ class Vector():
         self.y = y
 
     def __repr__(self):
-        return f'x = {self.x:.3f}, y = {self.y:.3f}'
+        return f'x = {self.x:.2f}, y = {self.y:.2f}'
 
     def __add__(self, other):
         return Vector(self.x + other.x, self.y + other.y)

@@ -15,6 +15,7 @@ class Rigid_body:
         self.kinetic_energy = self.find_kinetic_energy()
         self.potential_energy = self.find_potential_energy()
         self.total_energy = self.kinetic_energy + self.potential_energy
+        self.old_force = Vector(0,0)
         
 
     def apply_force(self, force):  # force must be vector
@@ -30,7 +31,7 @@ class Rigid_body:
         if self.is_touched:
             return
 
-        elif not self.is_fixed:
+        elif True:
             self.acceleration = self.net_force / self.mass
             temp = self.velocity
             self.velocity += self.acceleration*dt
@@ -56,4 +57,5 @@ class Rigid_body:
         self.update_energies()
 
     def reset_net_force(self):
+        self.old_force = self.net_force
         self.net_force = Vector(0, 0)
